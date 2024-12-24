@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:training_todo/model/todo.dart';
+import 'package:training_todo/model/entity/todo.dart';
 import 'package:training_todo/ui/top/todo_list.dart';
 
 class TopPage extends StatefulWidget {
