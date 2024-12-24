@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:training_todo/presentation/page/top_page.dart';
+import 'package:training_todo/ui/top/top_page.dart';
 
 void main() {
   runApp(const MyApp());
