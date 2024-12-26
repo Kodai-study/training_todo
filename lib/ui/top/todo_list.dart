@@ -4,7 +4,7 @@ import 'package:training_todo/model/entity/todo.dart';
 class TodoList extends StatelessWidget {
   const TodoList({super.key, required this.items});
 
-  final List<Todo> items;
+  final List<TodoData> items;
 
   @override
   Widget build(BuildContext context) {

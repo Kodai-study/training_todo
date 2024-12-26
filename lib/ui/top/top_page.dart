@@ -7,7 +7,7 @@ class TopPage extends StatefulWidget {
 
   final String title;
 
-  final List<Todo> items = [];
+  final List<TodoData> items = [];
 
   @override
   State<TopPage> createState() => _TopPageState();
@@ -32,7 +32,7 @@ class _TopPageState extends State<TopPage> {
         tooltip: 'Increment',
         onPressed: () {
           setState(() {
-            widget.items.add(Todo(
+            widget.items.add(TodoData(
                 id: widget.items.length,
                 title: "title${widget.items.length}",
                 deadline: DateTime.now(),
