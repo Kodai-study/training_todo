@@ -10,4 +10,8 @@ class TodoListManager {
     items ??= await database.getTodos();
     return items!;
   }
+
+  void clearCache() {
+    items = null;
+  }
 }
