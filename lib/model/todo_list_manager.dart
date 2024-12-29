@@ -1,14 +1,13 @@
 import 'package:training_todo/model/entity/todo.dart';
 
 class TodoListManager {
-  List<Todo>? items;
+  List<TodoData>? items;
+  TodoDatabase database;
 
-  Future<List<Todo>> fetchData() async {
-    return List.empty();
-  }
+  TodoListManager(this.database);
 
-  Future<List<Todo>> get data async {
-    items ??= await fetchData();
+  Future<List<TodoData>> get data async {
+    items ??= await database.getTodos();
     return items!;
   }
 }
