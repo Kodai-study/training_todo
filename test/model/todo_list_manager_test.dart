@@ -10,7 +10,33 @@ import 'todo_list_manager_test.mocks.dart';
 void main() {
   group("データの取得、追加の正常系テスト", () {
     final mockTodoDatabase = MockTodoDatabase();
-    final mockTodoListManager = TodoListManager(mockTodoDatabase);
+    test("データ取得がdatabaseから行われていることの確認", () async {
+      final mockTodoListManager = TodoListManager(mockTodoDatabase);
+      when(mockTodoDatabase.getTodos()).thenAnswer((_) async => []);
+      expect(await mockTodoListManager.data, isEmpty);
+      verify(mockTodoDatabase.getTodos()).called(1);
+    });
 
+    test("連続でデータ取得しても、キャッシュを削除するまで再度DBからの読み込みが行われない事", () async {
+      final mockTodoListManager = TodoListManager(mockTodoDatabase);
+      when(mockTodoDatabase.getTodos())
+          .thenAnswer((_) async => generateDefaultTodos(1));
+      expect(await mockTodoListManager.data, hasLength(1));
+      when(mockTodoDatabase.getTodos())
+          .thenAnswer((_) async => generateDefaultTodos(3));
+      expect(await mockTodoListManager.data, hasLength(1));
+      verify(mockTodoDatabase.getTodos()).called(1);
+    });
   });
+}
+
+List<TodoData> generateDefaultTodos(int size) {
+  return List.generate(
+      size,
+      (index) => TodoData(
+            id: index,
+            title: "title$index",
+            deadline: DateTime(2000).add(Duration(days: index)),
+            description: 'description$index',
+          ));
 }
