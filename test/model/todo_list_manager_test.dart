@@ -27,6 +27,18 @@ void main() {
       expect(await mockTodoListManager.data, hasLength(1));
       verify(mockTodoDatabase.getTodos()).called(1);
     });
+
+    test("キャッシュを削除した場合、再度DBから読み取りが行われること", () async {
+      final mockTodoListManager = TodoListManager(mockTodoDatabase);
+      when(mockTodoDatabase.getTodos())
+          .thenAnswer((_) async => generateDefaultTodos(1));
+      expect(await mockTodoListManager.data, hasLength(1));
+      mockTodoListManager.clearCache();
+      when(mockTodoDatabase.getTodos())
+          .thenAnswer((_) async => generateDefaultTodos(3));
+      expect(await mockTodoListManager.data, hasLength(3));
+      verify(mockTodoDatabase.getTodos()).called(2);
+    });
   });
 }
 
