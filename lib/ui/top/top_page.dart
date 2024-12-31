@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:training_todo/const/strings.dart';
 import 'package:training_todo/model/entity/todo.dart';
 import 'package:training_todo/ui/top/todo_list.dart';
 
 class TopPage extends StatefulWidget {
-  TopPage({super.key, required this.title});
-
-  final String title;
+  TopPage({super.key});
 
   final List<TodoData> items = [];
 
@@ -19,7 +18,7 @@ class _TopPageState extends State<TopPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Text(TopPageStrings.title),
       ),
       body: Center(
         child: Column(
