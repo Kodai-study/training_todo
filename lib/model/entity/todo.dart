@@ -25,6 +25,10 @@ class TodoDatabase extends _$TodoDatabase {
     return select(todo).get();
   }
 
+  Future<void> insertTodo(TodoData todoData) {
+    return into(todo).insert(todoData);
+  }
+
   @override
   int get schemaVersion => 1;
 }
