@@ -11,6 +11,11 @@ class TodoListManager {
     return items!;
   }
 
+  Future<void> add(TodoData todo) async {
+    await database.insertTodo(todo);
+    (await data).add(todo);
+  }
+
   void clearCache() {
     items = null;
   }
