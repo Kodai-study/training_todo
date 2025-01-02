@@ -17,6 +17,15 @@ void main() {
       verify(mockTodoDatabase.getTodos()).called(1);
     });
 
+    test("データ追加操作でデータが追加されることの確認", () async {
+      final todoListManager = TodoListManager(mockTodoDatabase);
+      expect(todoListManager.data, isEmpty);
+      final todoData = generateDefaultTodos(1).first;
+      await todoListManager.add(todoData);
+      expect(await todoListManager.data, hasLength(1));
+      expect(await todoListManager.data, todoData);
+    });
+
     test("連続でデータ取得しても、キャッシュを削除するまで再度DBからの読み込みが行われない事", () async {
       final mockTodoDatabase = MockTodoDatabase();
       final mockTodoListManager = TodoListManager(mockTodoDatabase);
