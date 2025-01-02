@@ -18,6 +18,7 @@ void main() {
     });
 
     test("連続でデータ取得しても、キャッシュを削除するまで再度DBからの読み込みが行われない事", () async {
+      final mockTodoDatabase = MockTodoDatabase();
       final mockTodoListManager = TodoListManager(mockTodoDatabase);
       when(mockTodoDatabase.getTodos())
           .thenAnswer((_) async => generateDefaultTodos(1));
@@ -29,6 +30,7 @@ void main() {
     });
 
     test("キャッシュを削除した場合、再度DBから読み取りが行われること", () async {
+      final mockTodoDatabase = MockTodoDatabase();
       final mockTodoListManager = TodoListManager(mockTodoDatabase);
       when(mockTodoDatabase.getTodos())
           .thenAnswer((_) async => generateDefaultTodos(1));
