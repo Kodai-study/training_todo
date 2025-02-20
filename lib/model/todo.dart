@@ -23,7 +23,10 @@ class Todo extends Table {
 
 @DriftDatabase(tables: [Todo])
 class TodoDatabase extends _$TodoDatabase {
-  TodoDatabase() : super(_openConnection());
+  TodoDatabase(QueryExecutor nativeDatabase)
+      : super(LazyDatabase(() async {
+          return nativeDatabase;
+        }));
 
   Future<List<TodoData>> getTodos() {
     return select(todo).get();
@@ -31,12 +34,4 @@ class TodoDatabase extends _$TodoDatabase {
 
   @override
   int get schemaVersion => 1;
-}
-
-LazyDatabase _openConnection() {
-  return LazyDatabase(() async {
-    final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(join(dbFolder.path, 'db.sqlite'));
-    return NativeDatabase(file);
-  });
 }
