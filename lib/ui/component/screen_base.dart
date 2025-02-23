@@ -1,10 +1,14 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+import 'header.dart';
 
 class ScreenBase extends StatelessWidget {
-  const ScreenBase({super.key});
+  final Widget body;
+
+  const ScreenBase({super.key, required this.body});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(appBar: Header(title: "ページ"), body: body);
   }
 }
