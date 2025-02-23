@@ -1,9 +1,4 @@
-import 'dart:io';
-
 import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 
 part 'todo.g.dart';
 
@@ -30,6 +25,10 @@ class TodoDatabase extends _$TodoDatabase {
 
   Future<List<TodoData>> getTodos() {
     return select(todo).get();
+  }
+
+  Future<void> insertTodo(TodoData newTodo) async {
+    await into(todo).insert(newTodo);
   }
 
   @override
