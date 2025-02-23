@@ -1,10 +1,18 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-class Header extends StatelessWidget {
-  const Header({super.key});
+class Header extends StatelessWidget implements PreferredSizeWidget {
+  final String title;
+
+  const Header({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return AppBar(
+      backgroundColor: Color(0xFFFBEDDE),
+      title: Text(title),
+    );
   }
+
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }
