@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:training_todo/extension/datetime_extension.dart';
 import 'package:training_todo/model/todo.dart';
 
 class TodoListTile extends StatelessWidget {
@@ -18,7 +19,9 @@ class TodoListTile extends StatelessWidget {
     return ListTile(
       title: Text(todoData.title),
       leading: IconButton(onPressed: null, icon: leadingIcon),
-      trailing: Text(todoData.deadline.toString()),
+      trailing: todoData.deadline != null
+          ? Text(todoData.deadline!.formatAsYMD())
+          : null,
     );
   }
 }
