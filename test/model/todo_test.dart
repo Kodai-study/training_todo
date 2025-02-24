@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart';
+import 'package:training_todo/extension/datetime_extension.dart';
 import 'package:training_todo/model/todo.dart';
 
 void main() {
@@ -29,9 +30,7 @@ void main() {
       );
       await todoDatabase.insertTodo(insertData);
 
-      final clearMilliSeconds = currentDateTime.subtract(Duration(
-          milliseconds: currentDateTime.millisecond,
-          microseconds: currentDateTime.microsecond));
+      final clearMilliSeconds = currentDateTime.removeSubSecond();
 
       final todos = await todoDatabase.getTodos();
       expect(todos, hasLength(1));
