@@ -9,6 +9,8 @@ class Todo extends Table {
 
   DateTimeColumn get deadline => dateTime().nullable()();
 
+  DateTimeColumn get createdAt => dateTime()();
+
   TextColumn get description => text().nullable()();
 
   DateTimeColumn get completion => dateTime().nullable()();
