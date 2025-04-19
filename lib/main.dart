@@ -7,9 +7,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:training_todo/repositories/todo/todo_repository.dart';
 import 'package:training_todo/repositories/todo/todo_repository_database.dart';
+import 'package:training_todo/routing/router.dart';
 import 'package:training_todo/services/database/app_database.dart';
 
-import '../ui/top/top_page.dart';
 import 'repositories/todo/todo_list_provider.dart';
 
 void main() async {
@@ -20,7 +20,8 @@ void main() async {
   final repository = TodoRepositoryDatabase(AppDatabase(NativeDatabase(file)));
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider<TodoListProvider>.value(value: TodoListProvider()),
+      ChangeNotifierProvider<TodoListProvider>(
+          create: (context) => TodoListProvider()),
       Provider<TodoRepository>.value(
         value: repository,
       )
@@ -34,13 +35,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router(),
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: TopPage(),
     );
   }
 }
