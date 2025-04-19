@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:training_todo/model/todo.dart';
+import 'package:training_todo/model/todo_item.dart';
 import 'package:training_todo/ui/top/todo_list_provider.dart';
 
 import 'todo_list_provider_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<TodoDatabase>()])
+// @GenerateNiceMocks([MockSpec<TodoDatabase>()])
 void main() {
   var mockTodoDatabase = MockTodoDatabase();
 
@@ -18,30 +18,30 @@ void main() {
   test("description", () async {
     final provider = TodoListProvider(mockTodoDatabase);
     await waitForInitialization(provider);
-    expect(provider.todoList, isEmpty);
+    expect(provider._todoList, isEmpty);
   });
 
   test("description2", () async {
     when(mockTodoDatabase.getTodos()).thenAnswer((_) async => testTodoData);
     final provider = TodoListProvider(mockTodoDatabase);
     await waitForInitialization(provider);
-    expect(provider.todoList, testTodoData);
+    expect(provider._todoList, testTodoData);
   });
 
   test("description3", () async {
     final mockTodoDatabase = MockTodoDatabase();
     final provider = TodoListProvider(mockTodoDatabase);
     await waitForInitialization(provider);
-    expect(provider.todoList, isEmpty);
+    expect(provider._todoList, isEmpty);
     final firstData = TodoData(id: 0, title: "title", isComplete: true);
     final secondData = TodoData(id: 1, title: "title1", isComplete: false);
 
     await provider.addTodo(firstData);
-    expect(provider.todoList, hasLength(1));
-    expect(provider.todoList.first, firstData);
+    expect(provider._todoList, hasLength(1));
+    expect(provider._todoList.first, firstData);
     await provider.addTodo(secondData);
-    expect(provider.todoList, hasLength(2));
-    expect(provider.todoList[1], secondData);
+    expect(provider._todoList, hasLength(2));
+    expect(provider._todoList[1], secondData);
     verify(mockTodoDatabase.getTodos()).called(1);
     verify(mockTodoDatabase.insertTodo(any)).called(2);
   });

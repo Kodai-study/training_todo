@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:training_todo/repositories/todo/todo_list_provider.dart';
+import 'package:training_todo/ui/top/todo_list_provider.dart';
 import 'package:training_todo/ui/top/todo_list_tile.dart';
 
 class TodoList extends StatelessWidget {
@@ -13,11 +13,11 @@ class TodoList extends StatelessWidget {
         return ListView.builder(
           itemBuilder: (_, i) => Column(
             children: [
-              TodoListTile(todoData: provider.todoList[i]),
+              TodoListTile(todoData: provider._todoList[i]),
               Divider()
             ],
           ),
-          itemCount: provider.todoList.length,
+          itemCount: provider._todoList.length,
         );
       },
     );

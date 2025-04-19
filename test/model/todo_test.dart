@@ -4,7 +4,8 @@ import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart';
 import 'package:training_todo/extension/datetime_extension.dart';
-import 'package:training_todo/model/todo.dart';
+import 'package:training_todo/model/todo_item.dart';
+import 'package:training_todo/services/todo/app_database.dart';
 
 void main() {
   late TodoDatabase todoDatabase;

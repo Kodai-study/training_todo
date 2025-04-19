@@ -1,8 +1,32 @@
-import 'package:flutter/material.dart';
-import 'package:training_todo/ui/top/top_page.dart';
+import 'dart:io';
 
-void main() {
-  runApp(const MyApp());
+import 'package:drift/native.dart';
+import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:training_todo/repositories/todo/todo_repository.dart';
+import 'package:training_todo/repositories/todo/todo_repository_database.dart';
+import 'package:training_todo/services/database/app_database.dart';
+
+import '../ui/top/top_page.dart';
+import 'repositories/todo/todo_list_provider.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final dbFloder = await getApplicationDocumentsDirectory();
+  final file = File(join(dbFloder.path, 'db.sqlite'));
+  final repository = TodoRepositoryDatabase(AppDatabase(NativeDatabase(file)));
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<TodoListProvider>.value(value: TodoListProvider()),
+      Provider<TodoRepository>.value(
+        value: repository,
+      )
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +40,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const TopPage(),
+      home: TopPage(),
     );
   }
 }

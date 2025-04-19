@@ -3,7 +3,7 @@ import 'package:training_todo/extension/datetime_extension.dart';
 import 'package:training_todo/model/todo_item.dart';
 
 class TodoListTile extends StatelessWidget {
-  final TodoItem todoData;
+  final TodoData todoData;
 
   const TodoListTile({
     super.key,
