@@ -32,8 +32,9 @@ class AppDatabase extends _$AppDatabase {
   @override
   int get schemaVersion => 1;
 
-  Future<int> updateTodo(TodoData newTodo) async {
-    var statement = update(todo)..where((item) => item.id.equals(newTodo.id));
+  Future<int> updateTodo(TodoCompanion newTodo) async {
+    var statement = update(todo)
+      ..where((item) => item.id.equals(newTodo.id.value));
     return await statement.write(newTodo);
   }
 
@@ -48,7 +49,7 @@ class AppDatabase extends _$AppDatabase {
     return await selector.get();
   }
 
-  Future<int> insertTodo(TodoData newTodo) async {
+  Future<int> insertTodo(TodoCompanion newTodo) async {
     return await into(todo).insert(newTodo);
   }
 }
