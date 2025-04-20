@@ -13,7 +13,7 @@ class TodoRepositoryDatabase implements TodoRepository {
   @override
   Future<Result<TodoItem>> changeTodo(newTodo) async {
     try {
-      await appDatabase.updateTodo(newTodo.toDatabaseData());
+      await appDatabase.updateTodo(newTodo.toCompanion());
       return Result.ok(newTodo);
     } on Exception catch (e) {
       return Result.error(e);
@@ -33,7 +33,7 @@ class TodoRepositoryDatabase implements TodoRepository {
   @override
   Future<Result<TodoItem>> insertTodo(newTodo) async {
     try {
-      await appDatabase.insertTodo(newTodo.toDatabaseData());
+      await appDatabase.insertTodo(newTodo.toCompanion());
       return Result.ok(newTodo);
     } on Exception catch (e) {
       return Result.error(e);

@@ -17,6 +17,10 @@ class TodoItem {
         id: id, title: title, createdAt: createdAt, isComplete: isComplete);
   }
 
+  TodoCompanion toCompanion() {
+    return TodoCompanion.insert(title: title, createdAt: createdAt, isComplete: isComplete);
+  }
+
   factory TodoItem.convert(TodoData data) {
     return TodoItem(
       data.id,
