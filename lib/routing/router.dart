@@ -10,8 +10,7 @@ GoRouter router() => GoRouter(initialLocation: Routes.home, routes: [
         path: Routes.home,
         builder: (context, state) {
           return ChangeNotifierProvider(
-            create: (context) =>
-                TopViewmodelDatabase(context.read(), context.read()),
+            create: (context) => TopViewmodel(context.read()),
             child: TopScreen(),
           );
         },
