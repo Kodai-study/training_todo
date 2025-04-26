@@ -1,17 +1,17 @@
 import 'dart:io';
 
+import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart';
 import 'package:training_todo/extension/datetime_extension.dart';
-import 'package:training_todo/model/todo_item.dart';
-import 'package:training_todo/services/todo/app_database.dart';
+import 'package:training_todo/services/database/app_database.dart';
 
 void main() {
-  late TodoDatabase todoDatabase;
+  late AppDatabase todoDatabase;
   group("ToDoデータベースの基本試験", () {
     setUp(() async {
-      todoDatabase = TodoDatabase(NativeDatabase.memory());
+      todoDatabase = AppDatabase(NativeDatabase.memory());
     });
 
     tearDown(() async {
@@ -21,23 +21,20 @@ void main() {
     test('Todoの挿入と取得', () async {
       final currentDateTime = DateTime.now();
 
-      var insertData = TodoData(
-        id: 0,
-        // autoIncrementで無視される
-        title: 'Test Todo',
-        deadline: currentDateTime,
-        description: 'Test Description',
-        isComplete: false,
-      );
+      var insertData = TodoCompanion.insert(
+          title: "title",
+          createdAt: currentDateTime,
+          isComplete: false,
+          deadline: Value(currentDateTime));
       await todoDatabase.insertTodo(insertData);
 
       final clearMilliSeconds = currentDateTime.removeSubSecond();
 
       final todos = await todoDatabase.getTodos();
       expect(todos, hasLength(1));
-      expect(todos[0].title, insertData.title);
+      expect(todos[0].title, insertData.title.value);
       expect(todos[0].deadline, clearMilliSeconds);
-      expect(todos[0].description, insertData.description);
+      expect(todos[0].description, insertData.description.value);
     });
 
     test("データベース作成時にデータが空であること", () async {
@@ -49,18 +46,16 @@ void main() {
     test('再接続後のデータ永続性', () async {
       final dbFile =
           File(join(Directory.systemTemp.createTempSync().path, 'test.db'));
-      final firstDb = TodoDatabase(NativeDatabase(dbFile));
+      final firstDb = AppDatabase(NativeDatabase(dbFile));
 
       expect(await firstDb.getTodos(), isEmpty);
-      await firstDb.insertTodo(TodoData(
-          id: 0,
+      await firstDb.insertTodo(TodoCompanion.insert(
           title: 'Persistent Todo',
-          deadline: DateTime.now(),
-          description: 'Test',
+          createdAt: DateTime.now(),
           isComplete: false));
       await firstDb.close();
 
-      final secondDb = TodoDatabase(NativeDatabase(dbFile));
+      final secondDb = AppDatabase(NativeDatabase(dbFile));
       final todos = await secondDb.getTodos();
       expect(todos, hasLength(1));
       dbFile.delete();
