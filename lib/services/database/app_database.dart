@@ -43,9 +43,9 @@ class AppDatabase extends _$AppDatabase {
     return await deleteStatement.go();
   }
 
-  Future<List<TodoData>> getTodos(TodoQuery query) async {
+  Future<List<TodoData>> getTodos({TodoQuery? query}) async {
     final selector = select(todo);
-    query(selector);
+    if (query != null) query(selector);
     return await selector.get();
   }
 

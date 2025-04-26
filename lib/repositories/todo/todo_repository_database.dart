@@ -43,7 +43,7 @@ class TodoRepositoryDatabase implements TodoRepository {
   @override
   Future<Result<List<TodoItem>>> getAllItem({TodoTableQuery? query}) async {
     try {
-      final item = await appDatabase.getTodos((item) {
+      final item = await appDatabase.getTodos(query: (item) {
         if (query != null) doQuery(query, item);
       });
       final todoItem = item.map((item) => TodoItem.convert(item)).toList();
@@ -58,7 +58,7 @@ class TodoRepositoryDatabase implements TodoRepository {
       DateTime first, DateTime end,
       {TodoTableQuery? query}) async {
     try {
-      final item = await appDatabase.getTodos((selector) {
+      final item = await appDatabase.getTodos(query: (selector) {
         if (query != null) doQuery(query, selector);
       });
       final todoItem = item.map((item) => TodoItem.convert(item)).toList();
@@ -72,7 +72,7 @@ class TodoRepositoryDatabase implements TodoRepository {
   Future<Result<List<TodoItem>>> getItemsByCompletionStatus(bool isCompleted,
       {TodoTableQuery? query}) async {
     try {
-      final item = await appDatabase.getTodos((selector) {
+      final item = await appDatabase.getTodos(query: (selector) {
         selector.where((todo) => todo.isComplete.equals(isCompleted));
         if (query != null) doQuery(query, selector);
       });
