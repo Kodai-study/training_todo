@@ -7,28 +7,33 @@ import 'package:training_todo/util/result.dart';
 import '../../../repositories/todo/todo_repository.dart';
 
 class TopViewmodel extends ChangeNotifier {
-  final TodoRepository _appDatabase;
+  final TodoRepository _todoRepository;
   late Command1<void, bool> filterWithCompleted;
-  List<TodoItem> _todoList = [];
+  List<TodoItem> _completedList = [];
+  List<TodoItem> _unCompletedList = [];
   late Command1<void, TodoItem> addTodo;
+  late Command0<void> loadList;
 
   static final _defaultQuery =
       TodoTableQuery(orderProperty: "deadLine", orderBy: OrderByMethod.ask);
   TodoTableQuery _query = _defaultQuery;
 
-  List<TodoItem> get todoList => _todoList;
+  List<TodoItem> get completedList => _completedList;
 
-  TopViewmodel(this._appDatabase) {
+  List<TodoItem> get unCompletedList => _unCompletedList;
+
+  TopViewmodel(this._todoRepository) {
     filterWithCompleted = Command1(_filterWithCompleted);
     addTodo = Command1(_addTodo);
+    loadList = Command0(_loadList);
   }
 
   Future<Result<void>> _filterWithCompleted(bool isComplete) async {
-    final newTodoList = await _appDatabase
+    final newTodoList = await _todoRepository
         .getItemsByCompletionStatus(isComplete, query: _query);
     switch (newTodoList) {
       case Ok<List<TodoItem>>():
-        _todoList = newTodoList.value;
+        _completedList = newTodoList.value;
         return Result.ok(null);
       case Error<List<TodoItem>>():
         return Result.error(newTodoList.error);
@@ -36,15 +41,43 @@ class TopViewmodel extends ChangeNotifier {
   }
 
   Future<Result<void>> _addTodo(TodoItem item) async {
-    _todoList.add(item);
+    if (item.isComplete) {
+      _completedList.add(item);
+    } else {
+      _unCompletedList.add(item);
+    }
+    notifyListeners();
+
     try {
-      await _appDatabase.insertTodo(item);
+      await _todoRepository.insertTodo(item);
       return Result.ok(null);
     } on Exception catch (e) {
-      _todoList.remove(item);
+      _completedList.remove(item);
       return Result.error(e);
     } finally {
       notifyListeners();
     }
+  }
+
+  Future<Result<void>> _loadList() async {
+    final getResult =
+        await _todoRepository.getItemsByCompletionStatus(true, query: _query);
+    switch (getResult) {
+      case Error<List<TodoItem>>():
+        return getResult;
+      case Ok<List<TodoItem>>():
+        _completedList = getResult.value;
+    }
+
+    final getInCompletedList =
+        await _todoRepository.getItemsByCompletionStatus(false, query: _query);
+    switch (getInCompletedList) {
+      case Error<List<TodoItem>>():
+        return getResult;
+      case Ok<List<TodoItem>>():
+        _unCompletedList = getResult.value;
+    }
+    notifyListeners();
+    return Result.ok(null);
   }
 }
