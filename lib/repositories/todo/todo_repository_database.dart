@@ -93,10 +93,26 @@ class TodoRepositoryDatabase implements TodoRepository {
 
   @override
   Future<Result<List<TodoItem>>> getItemsByDeadline(
-      DateTime first, DateTime end,
-      {TodoTableQuery? query}) {
-    // TODO: implement getItemsByDeadline
-    throw UnimplementedError();
+      {DateTime? first, DateTime? end, TodoTableQuery? query}) async {
+    try {
+      final item = await appDatabase.getTodos(query: (selector) {
+        if (first != null) {
+          selector.where((todo) => todo.deadline.isBiggerOrEqualValue(first));
+        }
+        if (end != null) {
+          var compareDataTime = end.add(Duration(days: 1));
+          compareDataTime = DateTime(
+              compareDataTime.year, compareDataTime.month, compareDataTime.day);
+
+          selector.where((todo) => todo.deadline.isSmallerThanValue(end));
+        }
+        if (query != null) doQuery(query, selector);
+      });
+      final todoItem = item.map((item) => TodoItem.convert(item)).toList();
+      return Result.ok(todoItem);
+    } on Exception catch (e) {
+      return Result.error(e);
+    }
   }
 
   void doQuery(TodoTableQuery query,
