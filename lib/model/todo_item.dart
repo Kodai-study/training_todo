@@ -1,16 +1,20 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:training_todo/services/database/app_database.dart';
 
-class TodoItem {
-  final int id;
-  final String title;
-  final DateTime? deadline;
-  final DateTime createdAt;
-  final String? description;
-  final DateTime? completion;
-  final bool isComplete;
+part 'todo_item.freezed.dart';
+part 'todo_item.g.dart';
 
-  TodoItem(this.id, this.title, this.createdAt, this.isComplete,
-      {this.deadline, this.description, this.completion});
+@freezed
+abstract class TodoItem with _$TodoItem {
+  factory TodoItem(int id, String title, DateTime createdAt, bool isComplete,
+      {String? description,
+      DateTime? completion,
+      DateTime? deadline}) = _TodoItem;
+
+  const TodoItem._();
+
+  factory TodoItem.fromJson(Map<String, dynamic> json) =>
+      _$TodoItemFromJson(json);
 
   TodoData toDatabaseData() {
     return TodoData(
@@ -18,7 +22,8 @@ class TodoItem {
   }
 
   TodoCompanion toCompanion() {
-    return TodoCompanion.insert(title: title, createdAt: createdAt, isComplete: isComplete);
+    return TodoCompanion.insert(
+        title: title, createdAt: createdAt, isComplete: isComplete);
   }
 
   factory TodoItem.convert(TodoData data) {
