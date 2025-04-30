@@ -15,12 +15,25 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$TodoItem {
+  /// タスクのID
   int get id;
+
+  /// タスクのタイトル。 1行で表示できる短いものを想定
   String get title;
+
+  /// タスクの作成日時
   DateTime get createdAt;
+
+  /// タスクが完了済みであるかどうか
   bool get isComplete;
+
+  /// タスクの詳細の説明文
   String? get description;
+
+  /// タスクの完了日時。完了されるまではnull
   DateTime? get completion;
+
+  /// タスクの期日。設定しなくてもよい
   DateTime? get deadline;
 
   /// Create a copy of TodoItem
@@ -140,18 +153,31 @@ class _TodoItem extends TodoItem {
   factory _TodoItem.fromJson(Map<String, dynamic> json) =>
       _$TodoItemFromJson(json);
 
+  /// タスクのID
   @override
   final int id;
+
+  /// タスクのタイトル。 1行で表示できる短いものを想定
   @override
   final String title;
+
+  /// タスクの作成日時
   @override
   final DateTime createdAt;
+
+  /// タスクが完了済みであるかどうか
   @override
   final bool isComplete;
+
+  /// タスクの詳細の説明文
   @override
   final String? description;
+
+  /// タスクの完了日時。完了されるまではnull
   @override
   final DateTime? completion;
+
+  /// タスクの期日。設定しなくてもよい
   @override
   final DateTime? deadline;
 

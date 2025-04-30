@@ -6,9 +6,27 @@ part 'todo_item.g.dart';
 
 @freezed
 abstract class TodoItem with _$TodoItem {
-  factory TodoItem(int id, String title, DateTime createdAt, bool isComplete,
-      {String? description,
+  factory TodoItem(
+
+      /// タスクのID
+      int id,
+
+      /// タスクのタイトル。 1行で表示できる短いものを想定
+      String title,
+
+      /// タスクの作成日時
+      DateTime createdAt,
+
+      /// タスクが完了済みであるかどうか
+      bool isComplete,
+      {
+      /// タスクの詳細の説明文
+      String? description,
+
+      /// タスクの完了日時。完了されるまではnull
       DateTime? completion,
+
+      /// タスクの期日。設定しなくてもよい
       DateTime? deadline}) = _TodoItem;
 
   const TodoItem._();
