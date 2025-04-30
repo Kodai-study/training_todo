@@ -9,7 +9,11 @@ import 'package:drift/drift.dart' as _i3;
 import 'package:drift/src/runtime/executor/stream_queries.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i6;
+import 'package:training_todo/model/todo_item.dart' as _i9;
+import 'package:training_todo/repositories/todo/todo_repository.dart' as _i7;
 import 'package:training_todo/services/database/app_database.dart' as _i2;
+import 'package:training_todo/services/database/todo_table_query.dart' as _i10;
+import 'package:training_todo/util/result.dart' as _i8;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -974,4 +978,233 @@ class MockAppDatabase extends _i1.Mock implements _i2.AppDatabase {
             ),
           )
           as String);
+}
+
+/// A class which mocks [TodoRepository].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockTodoRepository extends _i1.Mock implements _i7.TodoRepository {
+  @override
+  _i5.Future<_i8.Result<List<_i9.TodoItem>>> getItemsByCompletionStatus(
+    bool? isCompleted, {
+    _i10.TodoTableQuery? query,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(
+              #getItemsByCompletionStatus,
+              [isCompleted],
+              {#query: query},
+            ),
+            returnValue: _i5.Future<_i8.Result<List<_i9.TodoItem>>>.value(
+              _i6.dummyValue<_i8.Result<List<_i9.TodoItem>>>(
+                this,
+                Invocation.method(
+                  #getItemsByCompletionStatus,
+                  [isCompleted],
+                  {#query: query},
+                ),
+              ),
+            ),
+            returnValueForMissingStub:
+                _i5.Future<_i8.Result<List<_i9.TodoItem>>>.value(
+                  _i6.dummyValue<_i8.Result<List<_i9.TodoItem>>>(
+                    this,
+                    Invocation.method(
+                      #getItemsByCompletionStatus,
+                      [isCompleted],
+                      {#query: query},
+                    ),
+                  ),
+                ),
+          )
+          as _i5.Future<_i8.Result<List<_i9.TodoItem>>>);
+
+  @override
+  _i5.Future<_i8.Result<List<_i9.TodoItem>>> getItemsByDeadline({
+    DateTime? first,
+    DateTime? end,
+    _i10.TodoTableQuery? query,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#getItemsByDeadline, [], {
+              #first: first,
+              #end: end,
+              #query: query,
+            }),
+            returnValue: _i5.Future<_i8.Result<List<_i9.TodoItem>>>.value(
+              _i6.dummyValue<_i8.Result<List<_i9.TodoItem>>>(
+                this,
+                Invocation.method(#getItemsByDeadline, [], {
+                  #first: first,
+                  #end: end,
+                  #query: query,
+                }),
+              ),
+            ),
+            returnValueForMissingStub:
+                _i5.Future<_i8.Result<List<_i9.TodoItem>>>.value(
+                  _i6.dummyValue<_i8.Result<List<_i9.TodoItem>>>(
+                    this,
+                    Invocation.method(#getItemsByDeadline, [], {
+                      #first: first,
+                      #end: end,
+                      #query: query,
+                    }),
+                  ),
+                ),
+          )
+          as _i5.Future<_i8.Result<List<_i9.TodoItem>>>);
+
+  @override
+  _i5.Future<_i8.Result<List<_i9.TodoItem>>> getItemsByCompleteTime(
+    DateTime? first,
+    DateTime? end, {
+    _i10.TodoTableQuery? query,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(
+              #getItemsByCompleteTime,
+              [first, end],
+              {#query: query},
+            ),
+            returnValue: _i5.Future<_i8.Result<List<_i9.TodoItem>>>.value(
+              _i6.dummyValue<_i8.Result<List<_i9.TodoItem>>>(
+                this,
+                Invocation.method(
+                  #getItemsByCompleteTime,
+                  [first, end],
+                  {#query: query},
+                ),
+              ),
+            ),
+            returnValueForMissingStub:
+                _i5.Future<_i8.Result<List<_i9.TodoItem>>>.value(
+                  _i6.dummyValue<_i8.Result<List<_i9.TodoItem>>>(
+                    this,
+                    Invocation.method(
+                      #getItemsByCompleteTime,
+                      [first, end],
+                      {#query: query},
+                    ),
+                  ),
+                ),
+          )
+          as _i5.Future<_i8.Result<List<_i9.TodoItem>>>);
+
+  @override
+  _i5.Future<_i8.Result<List<_i9.TodoItem>>> getItemsByCreateTime(
+    DateTime? first,
+    DateTime? end, {
+    _i10.TodoTableQuery? query,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(
+              #getItemsByCreateTime,
+              [first, end],
+              {#query: query},
+            ),
+            returnValue: _i5.Future<_i8.Result<List<_i9.TodoItem>>>.value(
+              _i6.dummyValue<_i8.Result<List<_i9.TodoItem>>>(
+                this,
+                Invocation.method(
+                  #getItemsByCreateTime,
+                  [first, end],
+                  {#query: query},
+                ),
+              ),
+            ),
+            returnValueForMissingStub:
+                _i5.Future<_i8.Result<List<_i9.TodoItem>>>.value(
+                  _i6.dummyValue<_i8.Result<List<_i9.TodoItem>>>(
+                    this,
+                    Invocation.method(
+                      #getItemsByCreateTime,
+                      [first, end],
+                      {#query: query},
+                    ),
+                  ),
+                ),
+          )
+          as _i5.Future<_i8.Result<List<_i9.TodoItem>>>);
+
+  @override
+  _i5.Future<_i8.Result<List<_i9.TodoItem>>> getAllItem({
+    _i10.TodoTableQuery? query,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#getAllItem, [], {#query: query}),
+            returnValue: _i5.Future<_i8.Result<List<_i9.TodoItem>>>.value(
+              _i6.dummyValue<_i8.Result<List<_i9.TodoItem>>>(
+                this,
+                Invocation.method(#getAllItem, [], {#query: query}),
+              ),
+            ),
+            returnValueForMissingStub:
+                _i5.Future<_i8.Result<List<_i9.TodoItem>>>.value(
+                  _i6.dummyValue<_i8.Result<List<_i9.TodoItem>>>(
+                    this,
+                    Invocation.method(#getAllItem, [], {#query: query}),
+                  ),
+                ),
+          )
+          as _i5.Future<_i8.Result<List<_i9.TodoItem>>>);
+
+  @override
+  _i5.Future<_i8.Result<_i9.TodoItem>> insertTodo(_i9.TodoItem? newTodo) =>
+      (super.noSuchMethod(
+            Invocation.method(#insertTodo, [newTodo]),
+            returnValue: _i5.Future<_i8.Result<_i9.TodoItem>>.value(
+              _i6.dummyValue<_i8.Result<_i9.TodoItem>>(
+                this,
+                Invocation.method(#insertTodo, [newTodo]),
+              ),
+            ),
+            returnValueForMissingStub:
+                _i5.Future<_i8.Result<_i9.TodoItem>>.value(
+                  _i6.dummyValue<_i8.Result<_i9.TodoItem>>(
+                    this,
+                    Invocation.method(#insertTodo, [newTodo]),
+                  ),
+                ),
+          )
+          as _i5.Future<_i8.Result<_i9.TodoItem>>);
+
+  @override
+  _i5.Future<_i8.Result<void>> deleteTodo(int? id) =>
+      (super.noSuchMethod(
+            Invocation.method(#deleteTodo, [id]),
+            returnValue: _i5.Future<_i8.Result<void>>.value(
+              _i6.dummyValue<_i8.Result<void>>(
+                this,
+                Invocation.method(#deleteTodo, [id]),
+              ),
+            ),
+            returnValueForMissingStub: _i5.Future<_i8.Result<void>>.value(
+              _i6.dummyValue<_i8.Result<void>>(
+                this,
+                Invocation.method(#deleteTodo, [id]),
+              ),
+            ),
+          )
+          as _i5.Future<_i8.Result<void>>);
+
+  @override
+  _i5.Future<_i8.Result<_i9.TodoItem>> changeTodo(_i9.TodoItem? newTodo) =>
+      (super.noSuchMethod(
+            Invocation.method(#changeTodo, [newTodo]),
+            returnValue: _i5.Future<_i8.Result<_i9.TodoItem>>.value(
+              _i6.dummyValue<_i8.Result<_i9.TodoItem>>(
+                this,
+                Invocation.method(#changeTodo, [newTodo]),
+              ),
+            ),
+            returnValueForMissingStub:
+                _i5.Future<_i8.Result<_i9.TodoItem>>.value(
+                  _i6.dummyValue<_i8.Result<_i9.TodoItem>>(
+                    this,
+                    Invocation.method(#changeTodo, [newTodo]),
+                  ),
+                ),
+          )
+          as _i5.Future<_i8.Result<_i9.TodoItem>>);
 }
