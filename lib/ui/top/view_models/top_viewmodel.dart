@@ -52,7 +52,11 @@ class TopViewmodel extends ChangeNotifier {
       await _todoRepository.insertTodo(item);
       return Result.ok(null);
     } on Exception catch (e) {
-      _completedList.remove(item);
+      if (item.isComplete) {
+        _completedList.remove(item);
+      } else {
+        _unCompletedList.remove(item);
+      }
       return Result.error(e);
     } finally {
       notifyListeners();
@@ -75,7 +79,7 @@ class TopViewmodel extends ChangeNotifier {
       case Error<List<TodoItem>>():
         return getResult;
       case Ok<List<TodoItem>>():
-        _unCompletedList = getResult.value;
+        _unCompletedList = getInCompletedList.value;
     }
     notifyListeners();
     return Result.ok(null);
