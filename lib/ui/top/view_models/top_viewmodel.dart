@@ -8,36 +8,22 @@ import '../../../repositories/todo/todo_repository.dart';
 
 class TopViewmodel extends ChangeNotifier {
   final TodoRepository _todoRepository;
-  late Command1<void, bool> filterWithCompleted;
   List<TodoItem> _completedList = [];
   List<TodoItem> _unCompletedList = [];
-  late Command1<void, TodoItem> addTodo;
-  late Command0<void> loadList;
-
   static final _defaultQuery =
       TodoTableQuery(orderProperty: "deadLine", orderBy: OrderByMethod.ask);
   TodoTableQuery _query = _defaultQuery;
+
+  late Command1<void, TodoItem> addTodo;
+  late Command0<void> loadList;
 
   List<TodoItem> get completedList => _completedList;
 
   List<TodoItem> get unCompletedList => _unCompletedList;
 
   TopViewmodel(this._todoRepository) {
-    filterWithCompleted = Command1(_filterWithCompleted);
     addTodo = Command1(_addTodo);
     loadList = Command0(_loadList);
-  }
-
-  Future<Result<void>> _filterWithCompleted(bool isComplete) async {
-    final newTodoList = await _todoRepository
-        .getItemsByCompletionStatus(isComplete, query: _query);
-    switch (newTodoList) {
-      case Ok<List<TodoItem>>():
-        _completedList = newTodoList.value;
-        return Result.ok(null);
-      case Error<List<TodoItem>>():
-        return Result.error(newTodoList.error);
-    }
   }
 
   Future<Result<void>> _addTodo(TodoItem item) async {
@@ -68,7 +54,7 @@ class TopViewmodel extends ChangeNotifier {
         await _todoRepository.getItemsByCompletionStatus(true, query: _query);
     switch (getResult) {
       case Error<List<TodoItem>>():
-        return getResult;
+        return Result.error(getResult.error);
       case Ok<List<TodoItem>>():
         _completedList = getResult.value;
     }
@@ -77,7 +63,7 @@ class TopViewmodel extends ChangeNotifier {
         await _todoRepository.getItemsByCompletionStatus(false, query: _query);
     switch (getInCompletedList) {
       case Error<List<TodoItem>>():
-        return getResult;
+        return Result.error(getInCompletedList.error);
       case Ok<List<TodoItem>>():
         _unCompletedList = getInCompletedList.value;
     }
