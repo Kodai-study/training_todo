@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:training_todo/ui/top/todo_list_tile.dart';
-import 'package:training_todo/ui/top/view_models/top_viewmodel.dart';
+
+import '../view_models/top_viewmodel.dart';
+import 'todo_list_tile.dart';
 
 class TodoList extends StatelessWidget {
   const TodoList({super.key, required this.isCompleted});
