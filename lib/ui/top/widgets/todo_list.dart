@@ -11,16 +11,20 @@ class TodoList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<TopViewmodel>(
-      builder: (_, provider, child) {
-        final list =
-            isCompleted ? provider.completedList : provider.unCompletedList;
-
-        return ListView.separated(
-            itemBuilder: (_, i) => TodoListTile(todoData: list[i]),
-            itemCount: list.length,
-            separatorBuilder: (context, index) => Divider());
-      },
+    return SingleChildScrollView(
+      child: Consumer<TopViewmodel>(
+        builder: (_, provider, child) {
+          final list =
+              isCompleted ? provider.completedList : provider.unCompletedList;
+      
+          return ListView.separated(
+              shrinkWrap: true,
+              physics: BouncingScrollPhysics(),
+              itemBuilder: (_, i) => TodoListTile(todoData: list[i]),
+              itemCount: list.length,
+              separatorBuilder: (context, index) => Divider());
+        },
+      ),
     );
   }
 }

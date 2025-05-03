@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:training_todo/ui/top/todo_list.dart';
 import 'package:training_todo/ui/top/view_models/top_viewmodel.dart';
+import 'package:training_todo/ui/top/widgets/todo_list.dart';
 
 class TopScreen extends StatelessWidget {
   const TopScreen({super.key});
