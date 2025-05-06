@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
@@ -61,6 +61,30 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(TodoListTile), findsNothing);
+  });
+
+  testWidgets("完了済みリストにはチェック済みのアイコンがついていること", (tester) async {
+    await loadWidget(tester, true);
+
+    when(todoRepository.getItemsByCompletionStatus(true,
+            query: anyNamed("query")))
+        .thenAnswer((_) async => Result.ok(createDefaultCompletedTodoList(2)));
+    await topViewmodel.loadList.execute();
+    await tester.pumpAndSettle();
+
+    expect(find.byIcon(Icons.check_box_outlined), findsNWidgets(2));
+  });
+
+  testWidgets("未完了リストには未チェックのアイコンがついていること", (tester) async {
+    await loadWidget(tester, false);
+
+    when(todoRepository.getItemsByCompletionStatus(false,
+            query: anyNamed("query")))
+        .thenAnswer((_) async => Result.ok([kTodoItem]));
+    await topViewmodel.loadList.execute();
+    await tester.pumpAndSettle();
+
+    expect(find.byIcon(Icons.check_box_outline_blank), findsOneWidget);
   });
 
   testWidgets("リポジトリから100件返される場合、スクロールして全て表示できること", (tester) async {
