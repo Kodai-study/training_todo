@@ -97,8 +97,9 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
 
 /// @nodoc
 @JsonSerializable()
-class _User implements User {
-  _User({required this.id, required this.name, required this.email});
+class _User extends User {
+  _User({required this.id, required this.name, required this.email})
+      : super._();
   factory _User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
   /// ユーザの識別子

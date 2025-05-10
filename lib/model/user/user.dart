@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:training_todo/services/database/app_database.dart';
 
 part 'user.freezed.dart';
 part 'user.g.dart';
@@ -16,5 +17,23 @@ abstract class User with _$User {
       /// ユーザのメールアドレス
       required String email}) = _User;
 
+  const User._();
+
   factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
+
+  UserTableCompanion toCompanion() {
+    return UserTableCompanion.insert(
+      name: name,
+      email: email,
+      hashedPassword: '',
+    );
+  }
+
+  factory User.fromDbObject(UserTableData data) {
+    return User(
+      id: data.id,
+      name: data.name,
+      email: data.email,
+    );
+  }
 }
