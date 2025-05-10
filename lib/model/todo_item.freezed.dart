@@ -36,6 +36,9 @@ mixin _$TodoItem {
   /// タスクの期日。設定しなくてもよい
   DateTime? get deadline;
 
+  /// タスクを登録したユーザのID。未ログインの場合はnull
+  int? get userId;
+
   /// Create a copy of TodoItem
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -62,17 +65,18 @@ mixin _$TodoItem {
             (identical(other.completion, completion) ||
                 other.completion == completion) &&
             (identical(other.deadline, deadline) ||
-                other.deadline == deadline));
+                other.deadline == deadline) &&
+            (identical(other.userId, userId) || other.userId == userId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, title, createdAt, isComplete,
-      description, completion, deadline);
+      description, completion, deadline, userId);
 
   @override
   String toString() {
-    return 'TodoItem(id: $id, title: $title, createdAt: $createdAt, isComplete: $isComplete, description: $description, completion: $completion, deadline: $deadline)';
+    return 'TodoItem(id: $id, title: $title, createdAt: $createdAt, isComplete: $isComplete, description: $description, completion: $completion, deadline: $deadline, userId: $userId)';
   }
 }
 
@@ -88,7 +92,8 @@ abstract mixin class $TodoItemCopyWith<$Res> {
       bool isComplete,
       String? description,
       DateTime? completion,
-      DateTime? deadline});
+      DateTime? deadline,
+      int? userId});
 }
 
 /// @nodoc
@@ -110,6 +115,7 @@ class _$TodoItemCopyWithImpl<$Res> implements $TodoItemCopyWith<$Res> {
     Object? description = freezed,
     Object? completion = freezed,
     Object? deadline = freezed,
+    Object? userId = freezed,
   }) {
     return _then(_self.copyWith(
       id: null == id
@@ -140,6 +146,10 @@ class _$TodoItemCopyWithImpl<$Res> implements $TodoItemCopyWith<$Res> {
           ? _self.deadline
           : deadline // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      userId: freezed == userId
+          ? _self.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -148,7 +158,7 @@ class _$TodoItemCopyWithImpl<$Res> implements $TodoItemCopyWith<$Res> {
 @JsonSerializable()
 class _TodoItem extends TodoItem {
   _TodoItem(this.id, this.title, this.createdAt, this.isComplete,
-      {this.description, this.completion, this.deadline})
+      {this.description, this.completion, this.deadline, this.userId})
       : super._();
   factory _TodoItem.fromJson(Map<String, dynamic> json) =>
       _$TodoItemFromJson(json);
@@ -181,6 +191,10 @@ class _TodoItem extends TodoItem {
   @override
   final DateTime? deadline;
 
+  /// タスクを登録したユーザのID。未ログインの場合はnull
+  @override
+  final int? userId;
+
   /// Create a copy of TodoItem
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -212,17 +226,18 @@ class _TodoItem extends TodoItem {
             (identical(other.completion, completion) ||
                 other.completion == completion) &&
             (identical(other.deadline, deadline) ||
-                other.deadline == deadline));
+                other.deadline == deadline) &&
+            (identical(other.userId, userId) || other.userId == userId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, title, createdAt, isComplete,
-      description, completion, deadline);
+      description, completion, deadline, userId);
 
   @override
   String toString() {
-    return 'TodoItem(id: $id, title: $title, createdAt: $createdAt, isComplete: $isComplete, description: $description, completion: $completion, deadline: $deadline)';
+    return 'TodoItem(id: $id, title: $title, createdAt: $createdAt, isComplete: $isComplete, description: $description, completion: $completion, deadline: $deadline, userId: $userId)';
   }
 }
 
@@ -240,7 +255,8 @@ abstract mixin class _$TodoItemCopyWith<$Res>
       bool isComplete,
       String? description,
       DateTime? completion,
-      DateTime? deadline});
+      DateTime? deadline,
+      int? userId});
 }
 
 /// @nodoc
@@ -262,6 +278,7 @@ class __$TodoItemCopyWithImpl<$Res> implements _$TodoItemCopyWith<$Res> {
     Object? description = freezed,
     Object? completion = freezed,
     Object? deadline = freezed,
+    Object? userId = freezed,
   }) {
     return _then(_TodoItem(
       null == id
@@ -292,6 +309,10 @@ class __$TodoItemCopyWithImpl<$Res> implements _$TodoItemCopyWith<$Res> {
           ? _self.deadline
           : deadline // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      userId: freezed == userId
+          ? _self.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }

@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:training_todo/services/database/user_table.dart';
 
 part 'app_database.g.dart';
 
@@ -16,11 +17,13 @@ class Todo extends Table {
   DateTimeColumn get completion => dateTime().nullable()();
 
   BoolColumn get isComplete => boolean()();
+
+  IntColumn get userId => integer().references(UserTable, #id).nullable()();
 }
 
 typedef TodoQuery = void Function(SimpleSelectStatement<$TodoTable, TodoData>);
 
-@DriftDatabase(tables: [Todo])
+@DriftDatabase(tables: [Todo, UserTable])
 class AppDatabase extends _$AppDatabase {
   final List<OrderingTerm Function($TodoTable)> defaultOrderBy = [
     (todo) => OrderingTerm(expression: todo.deadline, mode: OrderingMode.desc)

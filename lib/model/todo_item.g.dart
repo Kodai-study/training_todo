@@ -18,6 +18,7 @@ _TodoItem _$TodoItemFromJson(Map<String, dynamic> json) => _TodoItem(
       deadline: json['deadline'] == null
           ? null
           : DateTime.parse(json['deadline'] as String),
+      userId: (json['userId'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$TodoItemToJson(_TodoItem instance) => <String, dynamic>{
@@ -28,4 +29,5 @@ Map<String, dynamic> _$TodoItemToJson(_TodoItem instance) => <String, dynamic>{
       'description': instance.description,
       'completion': instance.completion?.toIso8601String(),
       'deadline': instance.deadline?.toIso8601String(),
+      'userId': instance.userId,
     };
