@@ -22,6 +22,28 @@ List<TodoItem> createDefaultUncompletedTodoList(int size, {int offset = 0}) {
   return todoItemList;
 }
 
+List<TodoItem> createUnCompletedListByTitles(List<String> titles,
+    {final int idOffset = 0}) {
+  final todoItemList = <TodoItem>[];
+  int id = idOffset + 1;
+  for (String title in titles) {
+    todoItemList.add(kTodoItem.copyWith(id: id, title: title));
+    id++;
+  }
+  return todoItemList;
+}
+
+List<TodoItem> createCompletedListByTitles(List<String> titles,
+    {final int idOffset = 0}) {
+  final todoItemList = <TodoItem>[];
+  int id = idOffset + 1;
+  for (String title in titles) {
+    todoItemList.add(kTodoItemCompleted.copyWith(id: id, title: title));
+    id++;
+  }
+  return todoItemList;
+}
+
 List<TodoItem> createDefaultCompletedTodoList(int size, {int offset = 0}) {
   final todoItemList = <TodoItem>[];
   for (int i = 0; i < size; i++) {
