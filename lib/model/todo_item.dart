@@ -47,11 +47,18 @@ abstract class TodoItem with _$TodoItem {
   }
 
   TodoCompanion toCompanion() {
+
     return TodoCompanion.insert(
         title: title,
         createdAt: createdAt,
         isComplete: isComplete,
-        userId: Value(userId));
+        description: description != null
+            ? Value(description!)
+            : const Value.absent(),
+        deadline: deadline != null
+            ? Value(deadline!)
+            : const Value.absent(),
+        userId: userId != null ? Value(userId!) : const Value.absent());
   }
 
   factory TodoItem.convert(TodoData data) {
