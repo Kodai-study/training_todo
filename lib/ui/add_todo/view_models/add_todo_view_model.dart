@@ -1,3 +1,4 @@
+import 'package:clock/clock.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:training_todo/model/todo_item.dart';
 import 'package:training_todo/ui/top/view_models/top_viewmodel.dart';
@@ -20,6 +21,7 @@ class AddTodoViewModel extends ChangeNotifier {
     return Result.ok(null);
   }
 
+  @visibleForTesting
   TodoItem createTodoItem(
     String title,
     String description,
@@ -28,7 +30,7 @@ class AddTodoViewModel extends ChangeNotifier {
     return TodoItem(
       0,
       title,
-      DateTime.now(),
+      clock.now(),
       false,
       description: description.isEmpty ? null : description,
       deadline: deadlineStr.isEmpty
