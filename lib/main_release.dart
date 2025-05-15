@@ -12,6 +12,7 @@ import 'package:training_todo/repositories/todo/todo_repository_database.dart';
 import 'package:training_todo/services/database/app_database.dart';
 
 import 'main.dart';
+import 'ui/top/view_models/top_viewmodel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +22,7 @@ void main() async {
   final repository = TodoRepositoryDatabase(AppDatabase(NativeDatabase(file)));
   runApp(MultiProvider(
     providers: _createProvidersRelease(repository),
-    child: const MyApp(),
+    child: MyApp(),
   ));
 }
 
@@ -31,4 +32,5 @@ _createProvidersRelease(TodoRepository todoRepository) => [
       ),
       ChangeNotifierProvider<AuthRepository>(
           create: (context) => AuthRepositoryDemo()),
+      ChangeNotifierProvider(create: (context) => TopViewmodel(context.read())),
     ];
