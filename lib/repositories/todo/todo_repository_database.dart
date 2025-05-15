@@ -127,7 +127,7 @@ class TodoRepositoryDatabase implements TodoRepository {
       if (query.orderBy == OrderByMethod.desc) mode = OrderingMode.desc;
       OrderingTerm orderTerm($TodoTable todo) {
         switch (query.orderProperty) {
-          case "deadline":
+          case "deadLine":
             return OrderingTerm(expression: todo.deadline, mode: mode);
           case "createdAt":
             return OrderingTerm(expression: todo.createdAt, mode: mode);

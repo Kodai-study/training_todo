@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:training_todo/model/entity/todo.dart';
+
+import '../../services/database/app_database.dart';
 
 class TodoList extends StatelessWidget {
   const TodoList({super.key, required this.items});
