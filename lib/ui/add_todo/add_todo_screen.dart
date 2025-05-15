@@ -21,10 +21,11 @@ class AddTodoScreen extends StatelessWidget {
 
     void addNewTask() {
       if (_formKey.currentState!.validate()) {
-        viewModel.createNewTask.execute(viewModel.createTodoItem(
-            _titleTextController.text,
-            _descriptionTextController.text,
-            _deadlineTextController.text));
+        viewModel.createNewTask.execute((
+          _titleTextController.text,
+          _descriptionTextController.text,
+          _deadlineTextController.text
+        ));
         context.pop();
       }
     }
@@ -33,21 +34,23 @@ class AddTodoScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text("タスクを追加"),
         ),
-        body: Container(
-          padding: const EdgeInsets.all(30),
-          child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  TodoTitleField(controller: _titleTextController),
-                  const SizedBox(height: 50),
-                  TodoDeadlineField(controller: _deadlineTextController),
-                  const SizedBox(height: 50),
-                  TodoDescriptionField(controller: _descriptionTextController),
-                  const SizedBox(height: 50),
-                  _buildAddButton(addNewTask),
-                ],
-              )),
+        body: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(30),
+            child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TodoTitleField(controller: _titleTextController),
+                    const SizedBox(height: 50),
+                    TodoDeadlineField(controller: _deadlineTextController),
+                    const SizedBox(height: 50),
+                    TodoDescriptionField(controller: _descriptionTextController),
+                    const SizedBox(height: 50),
+                    _buildAddButton(addNewTask),
+                  ],
+                )),
+          ),
         ));
   }
 

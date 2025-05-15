@@ -7,14 +7,24 @@ import 'package:training_todo/util/result.dart';
 
 class AddTodoViewModel extends ChangeNotifier {
   final TopViewmodel _topViewmodel;
-  late Command1<void, TodoItem> createNewTask;
+
+  /// タスクを新規追加する。
+  ///
+  /// 引数：
+  /// (String title, String description, String deadline)
+  ///
+  /// title: タスクのタイトル
+  /// description: タスクの詳細
+  /// deadline: タスクの締切
+  late Command1<void, (String, String, String)> createNewTask;
 
   AddTodoViewModel(this._topViewmodel) {
     createNewTask = Command1(_createNewTask);
   }
 
-  Future<Result<void>> _createNewTask(TodoItem item) async {
-    await _topViewmodel.addTodo.execute(item);
+  Future<Result<void>> _createNewTask((String, String, String) item) async {
+    final todoItem = createTodoItem(item.$1, item.$2, item.$3);
+    await _topViewmodel.addTodo.execute(todoItem);
     if (_topViewmodel.addTodo.error) {
       return Result.error((_topViewmodel.addTodo.result as Error).error);
     }
