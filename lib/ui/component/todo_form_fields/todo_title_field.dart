@@ -19,6 +19,7 @@ class TodoTitleField extends StatelessWidget {
       labelText: "タスク名",
       icon: Icons.assignment,
       child: TextFormField(
+        key: const Key("todo_title_field"),
         controller: controller,
         decoration: InputDecoration(
           filled: true,

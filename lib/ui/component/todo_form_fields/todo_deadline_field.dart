@@ -24,6 +24,7 @@ class TodoDeadlineField extends StatelessWidget {
         children: [
           Expanded(
             child: TextFormField(
+              key: const Key("todo_deadline_field"),
               controller: controller,
               readOnly: true,
               decoration: InputDecoration(

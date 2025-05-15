@@ -3,14 +3,14 @@ import 'package:training_todo/ui/component/todo_form_fields/form_field_base.dart
 
 /// タスクのメモを入力するためのフィールド
 class TodoDescriptionField extends StatelessWidget {
-
   /// [initialValue] : 初期値
   ///
   /// [controller] : コントローラ
-  const TodoDescriptionField(
-      {super.key, this.initialValue = "", required this.controller});
+  TodoDescriptionField(
+      {super.key, String initialValue = "", required this.controller}) {
+    controller.text = initialValue;
+  }
 
-  final String initialValue;
   final TextEditingController controller;
 
   @override
@@ -19,7 +19,8 @@ class TodoDescriptionField extends StatelessWidget {
       labelText: "メモ",
       icon: Icons.edit_note,
       child: TextFormField(
-        initialValue: initialValue,
+        key: const Key("todo_description_field"),
+        controller: controller,
         maxLines: 5,
         // 背景を塗りつぶしにする。 角は丸くする
         decoration: InputDecoration(
