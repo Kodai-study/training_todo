@@ -12,6 +12,9 @@ import 'package:training_todo/model/todo_item.dart' as _i9;
 import 'package:training_todo/model/user/user.dart' as _i5;
 import 'package:training_todo/repositories/auth/auth_repository.dart' as _i2;
 import 'package:training_todo/repositories/todo/todo_repository.dart' as _i8;
+import 'package:training_todo/services/auth/auth_service_local.dart' as _i11;
+import 'package:training_todo/services/auth/auth_session_store_local.dart'
+    as _i12;
 import 'package:training_todo/services/database/todo_table_query.dart' as _i10;
 import 'package:training_todo/util/result.dart' as _i4;
 
@@ -97,6 +100,41 @@ class MockAuthRepository extends _i1.Mock implements _i2.AuthRepository {
             ),
           )
           as _i3.Future<_i4.Result<void>>);
+
+  @override
+  _i3.Future<_i4.Result<_i5.User>> register({
+    required String? name,
+    required String? email,
+    required String? password,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#register, [], {
+              #name: name,
+              #email: email,
+              #password: password,
+            }),
+            returnValue: _i3.Future<_i4.Result<_i5.User>>.value(
+              _i6.dummyValue<_i4.Result<_i5.User>>(
+                this,
+                Invocation.method(#register, [], {
+                  #name: name,
+                  #email: email,
+                  #password: password,
+                }),
+              ),
+            ),
+            returnValueForMissingStub: _i3.Future<_i4.Result<_i5.User>>.value(
+              _i6.dummyValue<_i4.Result<_i5.User>>(
+                this,
+                Invocation.method(#register, [], {
+                  #name: name,
+                  #email: email,
+                  #password: password,
+                }),
+              ),
+            ),
+          )
+          as _i3.Future<_i4.Result<_i5.User>>);
 
   @override
   void addListener(_i7.VoidCallback? listener) => super.noSuchMethod(
@@ -350,4 +388,154 @@ class MockTodoRepository extends _i1.Mock implements _i8.TodoRepository {
                 ),
           )
           as _i3.Future<_i4.Result<_i9.TodoItem>>);
+}
+
+/// A class which mocks [AuthServiceLocal].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAuthServiceLocal extends _i1.Mock implements _i11.AuthServiceLocal {
+  @override
+  _i3.Future<_i4.Result<_i5.User>> login({
+    required String? email,
+    required String? password,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#login, [], {#email: email, #password: password}),
+            returnValue: _i3.Future<_i4.Result<_i5.User>>.value(
+              _i6.dummyValue<_i4.Result<_i5.User>>(
+                this,
+                Invocation.method(#login, [], {
+                  #email: email,
+                  #password: password,
+                }),
+              ),
+            ),
+            returnValueForMissingStub: _i3.Future<_i4.Result<_i5.User>>.value(
+              _i6.dummyValue<_i4.Result<_i5.User>>(
+                this,
+                Invocation.method(#login, [], {
+                  #email: email,
+                  #password: password,
+                }),
+              ),
+            ),
+          )
+          as _i3.Future<_i4.Result<_i5.User>>);
+
+  @override
+  _i3.Future<_i4.Result<void>> signOut() =>
+      (super.noSuchMethod(
+            Invocation.method(#signOut, []),
+            returnValue: _i3.Future<_i4.Result<void>>.value(
+              _i6.dummyValue<_i4.Result<void>>(
+                this,
+                Invocation.method(#signOut, []),
+              ),
+            ),
+            returnValueForMissingStub: _i3.Future<_i4.Result<void>>.value(
+              _i6.dummyValue<_i4.Result<void>>(
+                this,
+                Invocation.method(#signOut, []),
+              ),
+            ),
+          )
+          as _i3.Future<_i4.Result<void>>);
+
+  @override
+  _i3.Future<_i4.Result<_i5.User>> register({
+    required String? name,
+    required String? email,
+    required String? password,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#register, [], {
+              #name: name,
+              #email: email,
+              #password: password,
+            }),
+            returnValue: _i3.Future<_i4.Result<_i5.User>>.value(
+              _i6.dummyValue<_i4.Result<_i5.User>>(
+                this,
+                Invocation.method(#register, [], {
+                  #name: name,
+                  #email: email,
+                  #password: password,
+                }),
+              ),
+            ),
+            returnValueForMissingStub: _i3.Future<_i4.Result<_i5.User>>.value(
+              _i6.dummyValue<_i4.Result<_i5.User>>(
+                this,
+                Invocation.method(#register, [], {
+                  #name: name,
+                  #email: email,
+                  #password: password,
+                }),
+              ),
+            ),
+          )
+          as _i3.Future<_i4.Result<_i5.User>>);
+}
+
+/// A class which mocks [AuthSessionStoreLocal].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAuthSessionStoreLocal extends _i1.Mock
+    implements _i12.AuthSessionStoreLocal {
+  @override
+  bool get isAuthenticated =>
+      (super.noSuchMethod(
+            Invocation.getter(#isAuthenticated),
+            returnValue: false,
+            returnValueForMissingStub: false,
+          )
+          as bool);
+
+  @override
+  bool get hasListeners =>
+      (super.noSuchMethod(
+            Invocation.getter(#hasListeners),
+            returnValue: false,
+            returnValueForMissingStub: false,
+          )
+          as bool);
+
+  @override
+  _i3.Future<void> persistSession(_i5.User? user) =>
+      (super.noSuchMethod(
+            Invocation.method(#persistSession, [user]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
+
+  @override
+  void signOut() => super.noSuchMethod(
+    Invocation.method(#signOut, []),
+    returnValueForMissingStub: null,
+  );
+
+  @override
+  void addListener(_i7.VoidCallback? listener) => super.noSuchMethod(
+    Invocation.method(#addListener, [listener]),
+    returnValueForMissingStub: null,
+  );
+
+  @override
+  void removeListener(_i7.VoidCallback? listener) => super.noSuchMethod(
+    Invocation.method(#removeListener, [listener]),
+    returnValueForMissingStub: null,
+  );
+
+  @override
+  void dispose() => super.noSuchMethod(
+    Invocation.method(#dispose, []),
+    returnValueForMissingStub: null,
+  );
+
+  @override
+  void notifyListeners() => super.noSuchMethod(
+    Invocation.method(#notifyListeners, []),
+    returnValueForMissingStub: null,
+  );
 }
