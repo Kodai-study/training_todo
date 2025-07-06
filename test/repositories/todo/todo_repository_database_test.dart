@@ -47,8 +47,6 @@ void main() {
     setUp(() async {
       appDatabase = AppDatabase(NativeDatabase.memory());
       fakeTodoRepository = TodoRepositoryDatabase(appDatabase);
-
-      await appDatabase.insertTodo(kTodoCompanion);
     });
 
     tearDown(() {
@@ -59,6 +57,7 @@ void main() {
       setUp(() async {
         final completedItem =
             kTodoCompanion.copyWith(id: Value(2), isComplete: Value(true));
+        await appDatabase.insertTodo(kTodoCompanion);
         await appDatabase.insertTodo(completedItem);
       });
 
@@ -81,6 +80,7 @@ void main() {
       group("作成日付順で並び替え", () {
         setUp(() async {
           final insertTimes = [
+            DateTime(2025, 1, 1), //1月1日未満
             DateTime(2025, 1, 1).subtract(Duration(microseconds: 1)), //1月1日未満
             DateTime(2025, 1, 1, 0, 0, 1), //1月1日より大きい
             DateTime(2025, 1, 2).subtract(Duration(microseconds: 1)), //1月2日未満
@@ -88,7 +88,7 @@ void main() {
           ];
           for (int i = 0; i < insertTimes.length; i++) {
             await appDatabase.insertTodo(kTodoCompanion.copyWith(
-                id: Value(i + 2), createdAt: Value(insertTimes[i])));
+                id: Value(i + 1), createdAt: Value(insertTimes[i])));
           }
         });
 
@@ -122,6 +122,7 @@ void main() {
       group("期日で並び替え", () {
         setUp(() async {
           final insertTimes = [
+            DateTime(2025, 2, 1),
             DateTime(2025, 2, 1).subtract(Duration(microseconds: 1)), //1月1日未満
             DateTime(2025, 2, 1, 0, 0, 1), //1月1日より大きい
             DateTime(2025, 2, 2).subtract(Duration(microseconds: 1)), //1月2日未満
@@ -129,14 +130,14 @@ void main() {
           ];
           for (int i = 0; i < insertTimes.length; i++) {
             await appDatabase.insertTodo(kTodoCompanion.copyWith(
-                id: Value(i + 2), deadline: Value(insertTimes[i])));
+                id: Value(i + 1), deadline: Value(insertTimes[i])));
           }
         });
 
         test("orderBy asc", () async {
           final result = await fakeTodoRepository.getAllItem(
               query: TodoTableQuery(
-                  orderProperty: "deadline", orderBy: OrderByMethod.ask));
+                  orderProperty: "deadLine", orderBy: OrderByMethod.ask));
 
           final list = (result as Ok<List<TodoItem>>).value;
           expect(list.map((item) => item.id).toList(), [2, 1, 3, 4, 5]);
@@ -145,7 +146,7 @@ void main() {
         test("orderBy desc", () async {
           final result = await fakeTodoRepository.getAllItem(
               query: TodoTableQuery(
-                  orderProperty: "deadline", orderBy: OrderByMethod.desc));
+                  orderProperty: "deadLine", orderBy: OrderByMethod.desc));
 
           final list = (result as Ok<List<TodoItem>>).value;
           expect(list.map((item) => item.id).toList(), [5, 4, 3, 1, 2]);
@@ -154,7 +155,7 @@ void main() {
 
       group("limit,offsetの試験", () {
         setUp(() async {
-          for (int i = 2; i <= 20; i++) {
+          for (int i = 1; i <= 20; i++) {
             final dateTime = DateTime(2025, 2, 1).add(Duration(days: i - 1));
             await appDatabase.insertTodo(kTodoCompanion.copyWith(
                 id: Value(i), deadline: Value(dateTime)));
@@ -188,7 +189,7 @@ void main() {
               query: TodoTableQuery(
                   limit: 10,
                   offset: 5,
-                  orderProperty: "deadline",
+                  orderProperty: "deadLine",
                   orderBy: OrderByMethod.desc));
 
           final list = (result as Ok<List<TodoItem>>).value;
@@ -204,6 +205,7 @@ void main() {
     group("期日でフィルタリング(getItemsByDeadline)", () {
       setUp(() async {
         final insertTimes = [
+          DateTime(2025, 2, 1), //2月1日＋1秒
           DateTime(2025, 2, 1, 0, 0, 1), //2月1日＋1秒
           DateTime(2025, 2, 2).subtract(Duration(microseconds: 1)), //2月2日-1秒
           DateTime(2025, 2, 3),
@@ -211,7 +213,7 @@ void main() {
         ];
         for (int i = 0; i < insertTimes.length; i++) {
           await appDatabase.insertTodo(kTodoCompanion.copyWith(
-              id: Value(i + 2), deadline: Value(insertTimes[i])));
+              id: Value(i + 1), deadline: Value(insertTimes[i])));
         }
       });
 
@@ -246,6 +248,26 @@ void main() {
         expect(result.value[2].id, 3);
         expect(result.value[3].id, 5);
       });
+    });
+
+    group("追加後、取得した時に全く同じデータを取得できること", () {
+      final testPatterns = [
+        kTodoItemCompleted,
+        kTodoItemCompleted.copyWith(
+            deadline: null, description: null, completion: null, userId: null),
+        kTodoItemCompleted.copyWith(deadline: null),
+        kTodoItemCompleted.copyWith(description: null),
+        kTodoItemCompleted.copyWith(completion: null),
+        kTodoItemCompleted.copyWith(userId: null)
+      ];
+      for (final item in testPatterns) {
+        test(item, () async {
+          await fakeTodoRepository.insertTodo(item);
+          final result = await fakeTodoRepository.getAllItem();
+          expect((result as Ok<List<TodoItem>>).value, hasLength(1));
+          expect(result.value[0], equals(item));
+        });
+      }
     });
   });
 }

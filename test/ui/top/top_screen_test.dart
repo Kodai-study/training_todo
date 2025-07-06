@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
+import 'package:training_todo/repositories/auth/auth_repository.dart';
 import 'package:training_todo/repositories/todo/todo_repository.dart';
 import 'package:training_todo/ui/top/top_screen.dart';
 import 'package:training_todo/ui/top/view_models/top_viewmodel.dart';
@@ -9,22 +10,26 @@ import 'package:training_todo/util/result.dart';
 
 import '../../../testing/app.dart';
 import '../../../testing/mocks/app_database_mock.mocks.dart';
+import '../../../testing/mocks/auth_mock.mocks.dart' show MockAuthRepository;
 import '../../../testing/models/todo.dart';
 
 void main() {
-  late TopViewmodel topViewmodel;
   late TodoRepository todoRepository;
 
   setUp(() {
     todoRepository = MockTodoRepository();
-    topViewmodel = TopViewmodel(todoRepository);
   });
 
   loadWidget(WidgetTester tester) async {
     await testApp(
-        tester,
-        ChangeNotifierProvider(
-            create: (context) => topViewmodel, child: TopScreen()));
+      tester,
+      MultiProvider(providers: [
+        ChangeNotifierProvider<TopViewmodel>(
+            create: (context) => TopViewmodel(todoRepository)),
+        ChangeNotifierProvider<AuthRepository>(
+            create: (context) => MockAuthRepository()),
+      ], child: TopScreen()),
+    );
   }
 
   group("Todoリストの表示テスト", () {
@@ -38,7 +43,9 @@ void main() {
       setListAnswer(todoRepository,
           completedList: ["完了済みタスク1", "完了済みタスク2"],
           inCompletedList: ["未完了タスク1"]);
+
       await loadWidget(tester);
+      await tester.pumpAndSettle();
 
       expect(find.text("未完了タスク1"), findsOneWidget);
       expect(find.text("完了済みタスク1"), findsNothing);
@@ -48,7 +55,9 @@ void main() {
       setListAnswer(todoRepository,
           completedList: ["完了済みタスク1", "完了済みタスク2"],
           inCompletedList: ["未完了タスク1"]);
+
       await loadWidget(tester);
+      await tester.pumpAndSettle();
 
       expect(find.text("未完了タスク1"), findsOneWidget);
       await tester.tap(find.text("完了済み"));
