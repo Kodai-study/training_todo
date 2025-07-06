@@ -13,4 +13,10 @@ abstract class AuthRepository extends ChangeNotifier {
 
   /// Sign out
   Future<Result<void>> signOut();
+
+  Future<Result<User>> register({
+    required String name,
+    required String email,
+    required String password,
+  });
 }
