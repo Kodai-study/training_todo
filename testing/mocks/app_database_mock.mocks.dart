@@ -418,6 +418,15 @@ class MockAppDatabase extends _i1.Mock implements _i2.AppDatabase {
           as _i5.Future<int>);
 
   @override
+  _i5.Future<int> insertUser(_i2.UserTableCompanion? newUser) =>
+      (super.noSuchMethod(
+            Invocation.method(#insertUser, [newUser]),
+            returnValue: _i5.Future<int>.value(0),
+            returnValueForMissingStub: _i5.Future<int>.value(0),
+          )
+          as _i5.Future<int>);
+
+  @override
   _i3.Migrator createMigrator() =>
       (super.noSuchMethod(
             Invocation.method(#createMigrator, []),

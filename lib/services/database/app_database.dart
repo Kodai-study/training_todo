@@ -55,4 +55,8 @@ class AppDatabase extends _$AppDatabase {
   Future<int> insertTodo(TodoCompanion newTodo) async {
     return await into(todo).insert(newTodo);
   }
+
+  Future<int> insertUser(UserTableCompanion newUser) async {
+    return await into(userTable).insert(newUser);
+  }
 }
