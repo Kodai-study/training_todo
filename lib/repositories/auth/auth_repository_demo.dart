@@ -24,4 +24,12 @@ class AuthRepositoryDemo extends AuthRepository {
   @override
   // TODO: implement loggedInUser
   User? get loggedInUser => _loggedInUser;
+
+  @override
+  Future<Result<User>> register(
+      {required String name,
+      required String email,
+      required String password}) async {
+    return Result.ok(User(id: 0, name: name, email: email));
+  }
 }
